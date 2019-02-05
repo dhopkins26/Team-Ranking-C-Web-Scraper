@@ -1,0 +1,45 @@
+        private void ScrapeData()
+        {
+            //scrape data from source
+            var webGet = new HtmlWeb();
+            var getPage = webGet.Load("https://www.teamrankings.com/nba/stat/win-pct-all-games");
+            var tableHeader = getPage.DocumentNode.SelectNodes("//table/thead/tr");
+            var tableData = getPage.DocumentNode.SelectNodes("//table/tbody/tr");
+
+            //create datatable
+            DataTable dataTable = new DataTable();
+            dataTable.Columns.Add("Rk", typeof(string));
+            dataTable.Columns.Add("Team", typeof(string));
+            dataTable.Columns.Add("2018", typeof(string));
+            dataTable.Columns.Add("Last3", typeof(string));
+            dataTable.Columns.Add("Last1", typeof(string));
+            dataTable.Columns.Add("Home", typeof(string));
+            dataTable.Columns.Add("Away", typeof(string));
+            dataTable.Columns.Add("2017", typeof(string));
+
+
+            //add scraped data to datatable
+            /*var headers = tableHeader
+                        .Elements("th")
+                        .Select(th => th.InnerText.Trim());
+
+            foreach (var header in headers)
+            {
+                dataTable.Columns.Add(header);
+            }
+            */
+
+            var rows = tableData.Select(tr => tr
+                        .Elements("td")
+                        .Select(td => td.InnerText.Trim())
+                        .ToArray());
+
+            foreach (var row in rows)
+            {
+                dataTable.Rows.Add(row);
+            }
+
+            //sort datatable by team name then save it that way
+            dataTable.DefaultView.Sort = "Team asc";
+            dataTable = dataTable.DefaultView.ToTable();
+         }
