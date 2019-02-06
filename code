@@ -11,18 +11,11 @@
 
             //create datatable
             DataTable dataTable = new DataTable();
-            dataTable.Columns.Add("Rk", typeof(string));
-            dataTable.Columns.Add("Team", typeof(string));
-            dataTable.Columns.Add("2018", typeof(string));
-            dataTable.Columns.Add("Last3", typeof(string));
-            dataTable.Columns.Add("Last1", typeof(string));
-            dataTable.Columns.Add("Home", typeof(string));
-            dataTable.Columns.Add("Away", typeof(string));
-            dataTable.Columns.Add("2017", typeof(string));
+
 
 
             //add scraped data to datatable
-            /*var headers = tableHeader
+            var headers = tableHeader
                         .Elements("th")
                         .Select(th => th.InnerText.Trim());
 
@@ -30,7 +23,7 @@
             {
                 dataTable.Columns.Add(header);
             }
-            */
+            
 
             var rows = tableData.Select(tr => tr
                         .Elements("td")
